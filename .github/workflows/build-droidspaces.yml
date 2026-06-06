@@ -33,6 +33,11 @@ jobs:
             libssl-dev libelf-dev dwarves \
             gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
+      - name: Fetch KernelSU-Next source
+        run: |
+          git clone --depth=1 https://github.com/KernelSU-Next/KernelSU-Next.git KernelSU-Next
+          test -f KernelSU-Next/kernel/Kconfig
+
       - name: Add Droidspaces config fragment
         run: |
           cat > droidspaces.config <<'EOF'
