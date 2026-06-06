@@ -138,7 +138,7 @@ jobs:
           cd AnyKernel3
           sed -i 's/^do.devicecheck=.*/do.devicecheck=1/' anykernel.sh
           sed -i 's/^device.name1=.*/device.name1=cepheus/' anykernel.sh
-          sed -i 's/^block=.*/block=\\/dev\\/block\\/by-name\\/boot/' anykernel.sh
+          sed -i 's|^block=.*|block=/dev/block/by-name/boot|' anykernel.sh
           zip -r9 "../$ZIP_NAME" . -x .git/\* README.md \*placeholder
 
       - name: Upload artifacts
