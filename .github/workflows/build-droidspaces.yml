@@ -38,6 +38,19 @@ jobs:
           git clone --depth=1 https://github.com/KernelSU-Next/KernelSU-Next.git KernelSU-Next
           test -f KernelSU-Next/kernel/Kconfig
 
+      - name: Disable dtc YAML support
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("scripts/dtc/Makefile")
+          text = path.read_text()
+          start = text.index("ifeq ($(shell pkg-config --exists yaml-0.1")
+          end = text.index("endif", start) + len("endif")
+          text = text[:start] + "HOST_EXTRACFLAGS += -DNO_YAML\n" + text[end:]
+          path.write_text(text)
+          PY
+
       - name: Add Droidspaces config fragment
         run: |
           cat > droidspaces.config <<'EOF'
